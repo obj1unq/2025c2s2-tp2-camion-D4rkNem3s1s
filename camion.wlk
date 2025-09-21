@@ -33,4 +33,6 @@ object camion {
 	method masPeligrosasQue_(nivelCosa) = cosas.filter(
 		{ cosa => cosa.nivelPeligrosidad() >= nivelCosa.nivelPeligrosidad() }
 	)
+	
+	method puedeCircularEnRutaNivel(nivel) = (!self.excedidoDePeso()) && (self.masPeligrosasQue(20) == #{})
 }

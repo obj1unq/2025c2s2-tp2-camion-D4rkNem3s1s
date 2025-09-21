@@ -76,4 +76,16 @@ describe "Camion" {
     assert.equals(#{}, camion.masPeligrosasQue(200))
     assert.equals(#{}, camion.masPeligrosasQue_(residuosRadiactivos))
   }
+  
+  test "Puede circular en ruta" {
+    bumblebee.transformacion(auto)
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantidad(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.that(camion.puedeCircularEnRutaNivel(20))
+    paqueteDeLadrillos.cantidad(400)
+    assert.notThat(camion.puedeCircularEnRutaNivel(20))
+    bumblebee.transformacion(robot)
+    assert.notThat(camion.puedeCircularEnRutaNivel(20))
+  }
 }
