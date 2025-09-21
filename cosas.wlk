@@ -15,21 +15,25 @@ object paqueteDeLadrillos {
 object bateriaAntiaerea {
 	var tieneMisiles = false
 	
-	method peso() = 500
+	method tieneMisiles(_tieneMisiles) {
+		tieneMisiles = _tieneMisiles
+	}
 	
-	method nivelPeligrosidad() = 10
-}
-
-object bateriaConMisiles {
-	const property nivelPeligrosidad = 100
+	method peso() {
+		var peso = 200
+		if (tieneMisiles) {
+			peso = 300
+		}
+		return peso
+	}
 	
-	method peso() = 300
-}
-
-object bateriaSinMisiles {
-	const property nivelPeligrosidad = 0
-	
-	method peso() = 200
+	method nivelPeligrosidad() {
+		var nivel = 0
+		if (tieneMisiles) {
+			nivel = 100
+		}
+		return nivel
+	}
 }
 
 object residuosRadiactivos {
@@ -41,15 +45,19 @@ object residuosRadiactivos {
 	
 	method peso() = peso
 	
-	method nivelPeligrosidad() = 10
+	method nivelPeligrosidad() = 200
 }
 
 object arenaAGranel {
-	var property cantidad = 0
+	var peso = 0
 	
-	method peso(_peso) = _peso
+	method peso(_peso) {
+		peso = _peso
+	}
 	
-	method nivelPeligrosidad() = 10
+	method peso() = peso
+	
+	method nivelPeligrosidad() = 1
 }
 
 object bumblebee {
@@ -61,9 +69,9 @@ object bumblebee {
 }
 
 object auto {
-	method nivelPeligrosidad() = 10
+	method nivelPeligrosidad() = 15
 }
 
 object robot {
-	method nivelPeligrosidad() = 10
+	method nivelPeligrosidad() = 30
 }

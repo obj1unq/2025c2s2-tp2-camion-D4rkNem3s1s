@@ -11,17 +11,54 @@ describe "Camion" {
     camion.descargar(bumblebee)
     assert.equals(#{knightRider}, camion.cosas())
     assert.throwsExceptionWithMessage(
-      "Error ya esta cargado",
+      "Ya esta cargado el objeto",
       { camion.cargar(knightRider) }
     )
     assert.throwsExceptionWithMessage(
-      "Error No esta cargado",
+      "No esta cargado el objeto",
       { camion.descargar(bumblebee) }
     )
   }
   
   test "Todo Peso Par" {
     camion.cargar(bumblebee)
+    arenaAGranel.peso(50)
     camion.cargar(arenaAGranel)
+    assert.that(camion.esElPesoPar())
+    arenaAGranel.peso(51)
+    assert.notThat(camion.esElPesoPar())
+  }
+  
+  test "Hay alguno que pesa" {
+    camion.cargar(bumblebee)
+    arenaAGranel.peso(50)
+    camion.cargar(arenaAGranel)
+    assert.that(camion.hayAlgoDe_Peso(50))
+    assert.that(camion.hayAlgoDe_Peso(800))
+    assert.notThat(camion.hayAlgoDe_Peso(500))
+  }
+  
+  test "Peso y exceso de peso" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantidad(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.notThat(camion.excedidoDePeso())
+  }
+  
+  test "El de nivel" {
+    bumblebee.transformacion(auto)
+    camion.cargar(bumblebee)
+    bateriaAntiaerea.tieneMisiles(false)
+    camion.cargar(bateriaAntiaerea)
+    residuosRadiactivos.peso(80)
+    camion.cargar(residuosRadiactivos)
+    assert.that(camion.hayAlgoDe_Peligrosidad(0))
+    assert.that(camion.hayAlgoDe_Peligrosidad(15))
+    assert.that(camion.hayAlgoDe_Peligrosidad(200))
+    assert.notThat(camion.hayAlgoDe_Peligrosidad(30))
+    bumblebee.transformacion(robot)
+    assert.that(camion.hayAlgoDe_Peligrosidad(30))
+    bateriaAntiaerea.tieneMisiles(true)
+    assert.that(camion.hayAlgoDe_Peligrosidad(100))
   }
 }
