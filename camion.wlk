@@ -25,4 +25,12 @@ object camion {
 	method hayAlgoDe_Peligrosidad(_nivel) = cosas.any(
 		{ cosa => cosa.nivelPeligrosidad() == _nivel }
 	)
+	
+	method masPeligrosasQue(nivel) = cosas.filter(
+		{ cosa => cosa.nivelPeligrosidad() >= nivel }
+	)
+	
+	method masPeligrosasQue_(nivelCosa) = cosas.filter(
+		{ cosa => cosa.nivelPeligrosidad() >= nivelCosa.nivelPeligrosidad() }
+	)
 }

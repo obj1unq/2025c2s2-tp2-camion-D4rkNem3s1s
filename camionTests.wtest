@@ -61,4 +61,19 @@ describe "Camion" {
     bateriaAntiaerea.tieneMisiles(true)
     assert.that(camion.hayAlgoDe_Peligrosidad(100))
   }
+  
+  test "Cosas peligrosas" {
+    camion.cargar(knightRider)
+    bateriaAntiaerea.tieneMisiles(true)
+    camion.cargar(bateriaAntiaerea)
+    assert.equals(#{bateriaAntiaerea}, camion.masPeligrosasQue(15))
+    assert.equals(#{bateriaAntiaerea}, camion.masPeligrosasQue_(bumblebee))
+    bateriaAntiaerea.tieneMisiles(false)
+    assert.equals(#{knightRider}, camion.masPeligrosasQue(2))
+    //en el enunciado dice que deberian estar ambas pero el nivel de peligrosidad de la bateria descargada es 0
+    assert.equals(#{knightRider}, camion.masPeligrosasQue_(paqueteDeLadrillos))
+    //en el enunciado dice que deberian estar ambas pero el nivel de peligrosidad de la bateria descargada es 0
+    assert.equals(#{}, camion.masPeligrosasQue(200))
+    assert.equals(#{}, camion.masPeligrosasQue_(residuosRadiactivos))
+  }
 }
