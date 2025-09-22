@@ -34,5 +34,15 @@ object camion {
 		{ cosa => cosa.nivelPeligrosidad() >= nivelCosa.nivelPeligrosidad() }
 	)
 	
-	method puedeCircularEnRutaNivel(nivel) = (!self.excedidoDePeso()) && (self.masPeligrosasQue(20) == #{})
+	method puedeCircularEnRutaNivel(
+		nivel
+	) = (!self.excedidoDePeso()) && (self.masPeligrosasQue(20) == #{})
+	
+	method hayAlgoQuePesaEntre_Y_(minimo, maximo) = cosas.any(
+		{ cosa => cosa.peso() > minimo }
+	) && cosas.any({ cosa => cosa.peso() > minimo })
+}
+
+object almacen {
+	const property almacenimiento = #{}
 }

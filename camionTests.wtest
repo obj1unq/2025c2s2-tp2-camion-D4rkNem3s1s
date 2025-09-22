@@ -88,4 +88,59 @@ describe "Camion" {
     bumblebee.transformacion(robot)
     assert.notThat(camion.puedeCircularEnRutaNivel(20))
   }
+  
+  test "Más cosas" {
+    assert.that(contenedorPortuario.peso() == 100)
+    assert.that(contenedorPortuario.nivelPeligrosidad() == 0)
+    contenedorPortuario.empaquetar(knightRider)
+    arenaAGranel.peso(50)
+    contenedorPortuario.empaquetar(arenaAGranel)
+    assert.that(contenedorPortuario.peso() == 650)
+    assert.that(contenedorPortuario.nivelPeligrosidad() == 10)
+    embalajeDeSeguridad.embalar(knightRider)
+    assert.that(embalajeDeSeguridad.peso() == 500)
+    assert.that(embalajeDeSeguridad.nivelPeligrosidad() == 5)
+    bumblebee.transformacion(auto)
+    embalajeDeSeguridad.embalar(bumblebee)
+    assert.that(embalajeDeSeguridad.peso() == 800)
+    assert.that(embalajeDeSeguridad.nivelPeligrosidad() == 7.5)
+  }
+  
+  test "Tiene algo que pesa entre dos valores" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantidad(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.that(camion.hayAlgoQuePesaEntre_Y_(5, 100))
+    assert.that(camion.hayAlgoQuePesaEntre_Y_(5, 1000))
+    assert.notThat(camion.hayAlgoQuePesaEntre_Y_(900, 1000))
+  }
+  
+  test "Cosa más pesada" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantidad(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.equals(#{bumblebee}, camion.cosaMasPesada())
+    camion.descargar(paqueteDeLadrillos)
+    camion.descargar(bumblebee)
+    assert.throwsExceptionWithMessage(
+      "El camion esta vacio",
+      { camion.cosaMasPesada() }
+    )
+  }
+  
+  test "pesos" {
+    
+  }
+  
+  test "TotalBultos" {
+    
+  }
+  
+  test "Accidente" {
+    
+  }
+  
+  test "Transporte" {
+    
+  }
 }

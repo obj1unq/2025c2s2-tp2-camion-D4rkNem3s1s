@@ -75,3 +75,35 @@ object auto {
 object robot {
 	method nivelPeligrosidad() = 30
 }
+
+object contenedorPortuario {
+	const contenido = #{}
+	const property pesoContenedor = 100
+	
+	method peso() = pesoContenedor + contenido.sum(
+		{ empaquetados => empaquetados.peso() }
+	)
+	
+	method nivelPeligrosidad() {
+		if (contenido.isEmpty()) {
+			return 0
+		}
+		return contenido.max({empaquetados => empaquetados.nivelPeligrosidad()})
+	}
+	
+	method empaquetar(cosa) {
+		contenido.add(cosa)
+	}
+}
+
+object embalajeDeSeguridad {
+	var embalado = null
+	
+	method embalar(cosa) {
+		embalado = cosa
+	}
+	
+	method peso() = embalado.peso()
+	
+	method nivelPeligrosidad() = embalado.nivelPeligrosidad() / 2
+}
