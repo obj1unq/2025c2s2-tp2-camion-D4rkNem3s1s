@@ -4,6 +4,10 @@ object knightRider {
 	method nivelPeligrosidad() = 10
 	
 	method cantidadBultos() = 1
+	
+	method tenerAccidente() {
+		null
+	}
 }
 
 object paqueteDeLadrillos {
@@ -12,24 +16,30 @@ object paqueteDeLadrillos {
 	method peso() = 2 * cantidad
 	
 	method nivelPeligrosidad() = 2
-
+	
 	method cantidadBultos() {
-		if (cantidad <= 100){
+		if (cantidad <= 100) {
 			return 1
-		}else if(cantidad <= 300){
-			return 2
-		}else {
-			return 3
+		} else {
+			if (cantidad <= 300) {
+				return 2
+			} else {
+				return 3
+			}
+		}
+	}
+	
+	method tenerAccidente() {
+		if (cantidad < 12) {
+			cantidad = 0
+		} else {
+			cantidad -= 1
 		}
 	}
 }
 
 object bateriaAntiaerea {
-	var tieneMisiles = false
-	
-	method tieneMisiles(_tieneMisiles) {
-		tieneMisiles = _tieneMisiles
-	}
+	var property tieneMisiles = false
 	
 	method peso() {
 		var peso = 200
@@ -46,13 +56,17 @@ object bateriaAntiaerea {
 		}
 		return nivel
 	}
-
+	
 	method cantidadBultos() {
-		if(tieneMisiles){
+		if (tieneMisiles) {
 			return 2
-		}else{
+		} else {
 			return 1
 		}
+	}
+	
+	method tenerAccidente() {
+		if (self.tieneMisiles()) self.tieneMisiles(false)
 	}
 }
 
@@ -66,6 +80,10 @@ object residuosRadiactivos {
 	method peso() = peso
 	
 	method nivelPeligrosidad() = 200
+	
+	method tenerAccidente() {
+		peso += 15
+	}
 }
 
 object arenaAGranel {
@@ -78,8 +96,12 @@ object arenaAGranel {
 	method peso() = peso
 	
 	method nivelPeligrosidad() = 1
-
+	
 	method cantidadBultos() = 1
+	
+	method tenerAccidente() {
+		peso += 20
+	}
 }
 
 object bumblebee {
@@ -90,6 +112,14 @@ object bumblebee {
 	method nivelPeligrosidad() = transformacion.nivelPeligrosidad()
 	
 	method cantidadBultos() = 2
+	
+	method tenerAccidente() {
+		if (transformacion == auto) {
+			transformacion = robot
+		} else {
+			transformacion = auto
+		}
+	}
 }
 
 object auto {
@@ -120,8 +150,12 @@ object contenedorPortuario {
 	method empaquetar(cosa) {
 		contenido.add(cosa)
 	}
-
-	method cantidadBultos() = 1 + contenido.sum({empaquetados => empaquetados.cantidadBultos()})
+	
+	method cantidadBultos() = 1 + contenido.sum(
+		{ empaquetados => empaquetados.cantidadBultos() }
+	)
+	
+	method tenerAccidente() = 1 + contenido.sum({ cosa => cosa.cantidadBultos() })
 }
 
 object embalajeDeSeguridad {
@@ -130,11 +164,11 @@ object embalajeDeSeguridad {
 	method embalar(cosa) {
 		embalado = cosa
 	}
-
+	
 	method desembalar(cosa) {
-		if (embalado == cosa){
+		if (embalado == cosa) {
 			embalado = null
-		}else{
+		} else {
 			self.error("No esta embalado")
 		}
 	}
@@ -144,8 +178,8 @@ object embalajeDeSeguridad {
 	method nivelPeligrosidad() = embalado.nivelPeligrosidad() / 2
 	
 	method cantidadBultos() = 2
-}
-
-object ruta9 {
 	
+	method tenerAccidente() {
+		null
+	}
 }

@@ -51,16 +51,55 @@ object camion {
 	}
 	
 	method pesos() = cosas.map({ cosa => cosa.peso() })
-
-
-
-	method totalBultos() = cosas.sum({cosa => cosa.cantidadBultos()})
-
-
-
-
+	
+	method totalBultos() = cosas.sum({ cosa => cosa.cantidadBultos() })
+	
+	method accidente() {
+		cosas.forEach({ cosa => cosa.tenerAccidente() })
+	}
+	
+	method transportar(destino, camino) {
+		if (camino.puedeCircular(camion)) {
+			destino.cargarTodo(cosas)
+			cosas.clear()
+		} else {
+			self.error("El camino no puede ser recorrido")
+		}
+	}
 }
 
 object almacen {
 	const property almacenimiento = #{}
+	
+	method cargarTodo(cosas) {
+		almacenimiento.addAll(cosas)
+	}
+	
+	method cargar(unaCosa) {
+		if (almacenimiento.contains(unaCosa)) self.error(
+				"El almacenimiento ya tiene esta cosa cargada"
+			)
+		else almacenimiento.add(unaCosa)
+	}
+	
+	method descargar(unaCosa) {
+		if (!almacenimiento.contains(unaCosa)) self.error(
+				"El almacén no tiene esa cosa cargada"
+			)
+		else almacenimiento.remove(unaCosa)
+	}
+}
+
+object ruta9 {
+	method puedeCircular(camion) = camion.puedeCircularEnRutaNivel(20)
+}
+
+object caminosVecinales {
+	var pesoMaximoPermitido = 3000
+	
+	method pesoMaximoPermitido(peso) {
+		pesoMaximoPermitido = peso
+	}
+	
+	method puedeCircular(camion) = camion.pesoTotal() <= pesoMaximoPermitido
 }
