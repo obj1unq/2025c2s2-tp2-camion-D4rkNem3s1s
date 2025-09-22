@@ -88,7 +88,9 @@ object contenedorPortuario {
 		if (contenido.isEmpty()) {
 			return 0
 		}
-		return contenido.max({empaquetados => empaquetados.nivelPeligrosidad()})
+		return contenido.max(
+			{ empaquetados => empaquetados.nivelPeligrosidad() }
+		).nivelPeligrosidad()
 	}
 	
 	method empaquetar(cosa) {

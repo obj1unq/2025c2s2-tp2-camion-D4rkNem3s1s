@@ -119,17 +119,20 @@ describe "Camion" {
     camion.cargar(bumblebee)
     paqueteDeLadrillos.cantidad(300)
     camion.cargar(paqueteDeLadrillos)
-    assert.equals(#{bumblebee}, camion.cosaMasPesada())
+    assert.that(camion.cosaMasPesada() == bumblebee)
     camion.descargar(paqueteDeLadrillos)
     camion.descargar(bumblebee)
     assert.throwsExceptionWithMessage(
-      "El camion esta vacio",
+      "El camión no esta cargado",
       { camion.cosaMasPesada() }
     )
   }
   
   test "pesos" {
-    
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantidad(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.equals([800, 600], camion.pesos())
   }
   
   test "TotalBultos" {

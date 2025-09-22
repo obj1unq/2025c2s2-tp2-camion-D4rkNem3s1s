@@ -41,6 +41,16 @@ object camion {
 	method hayAlgoQuePesaEntre_Y_(minimo, maximo) = cosas.any(
 		{ cosa => cosa.peso() > minimo }
 	) && cosas.any({ cosa => cosa.peso() > minimo })
+	
+	method cosaMasPesada() {
+		if (cosas.isEmpty()) {
+			self.error("El camión no esta cargado")
+		} else {
+			return cosas.max({ cosa => cosa.peso() })
+		}
+	}
+	
+	method pesos() = cosas.map({ cosa => cosa.peso() })
 }
 
 object almacen {
