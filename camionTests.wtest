@@ -135,15 +135,65 @@ describe "Camion" {
     assert.equals([800, 600], camion.pesos())
   }
   
-  test "TotalBultos" {
+  test "TotalBultos-caso1" {
+    contenedorPortuario.empaquetar(knightRider)
+    contenedorPortuario.empaquetar(bumblebee)
+    camion.cargar(contenedorPortuario)
+    embalajeDeSeguridad.embalar(residuosRadiactivos)
+    camion.cargar(embalajeDeSeguridad)
+    camion.cargar(arenaAGranel)
+    paqueteDeLadrillos.cantidad(50)
+    camion.cargar(paqueteDeLadrillos)
+    bateriaAntiaerea.tieneMisiles(false)
+    camion.cargar(bateriaAntiaerea)
+    assert.equals(9, camion.totalBultos())
+  }
+  
+  test "TotalBultos-caso2" {
+    paqueteDeLadrillos.cantidad(150)
+    bateriaAntiaerea.tieneMisiles(true)
+    camion.cargar(bateriaAntiaerea)
+    camion.cargar(contenedorPortuario)
+    assert.equals(2, bateriaAntiaerea.cantidadBultos())
+    assert.equals(2, paqueteDeLadrillos.cantidadBultos())
+    assert.equals(1, contenedorPortuario.cantidadBultos())
+    assert.equals(5, camion.totalBultos())
+  }
+  
+  test "TotalBultos-caso3" {
+    paqueteDeLadrillos.cantidad(350)
+    camion.cargar(paqueteDeLadrillos)
+    camion.cargar(arenaAGranel)
+    assert.equals(4, camion.totalBultos())
+  }
+  
+  test "Accidente caso-1" {
     
   }
   
-  test "Accidente" {
+  test "Accidente caso-2" {
     
   }
   
-  test "Transporte" {
+  test "Transporte caso ruta 9 exitoso" {
+    
+  }
+  
+  test "Transporte caso ruta 9 fallido por peligrosidad" {
+    
+  }
+  
+  test "Transporte caso ruta 9 fallido por exceso de peso" {
+    arenaAGranel.peso(2000)
+    camion.cargar(arenaAGranel)
+    camion.puedeTransportar(ruta9)
+  }
+  
+  test "Transporte caso caminos vecinales exitoso" {
+    
+  }
+  
+  test "Transporte caso caminos vecinales fallido" {
     
   }
 }

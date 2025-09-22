@@ -2,6 +2,8 @@ object knightRider {
 	method peso() = 500
 	
 	method nivelPeligrosidad() = 10
+	
+	method cantidadBultos() = 1
 }
 
 object paqueteDeLadrillos {
@@ -10,6 +12,16 @@ object paqueteDeLadrillos {
 	method peso() = 2 * cantidad
 	
 	method nivelPeligrosidad() = 2
+
+	method cantidadBultos() {
+		if (cantidad <= 100){
+			return 1
+		}else if(cantidad <= 300){
+			return 2
+		}else {
+			return 3
+		}
+	}
 }
 
 object bateriaAntiaerea {
@@ -33,6 +45,14 @@ object bateriaAntiaerea {
 			nivel = 100
 		}
 		return nivel
+	}
+
+	method cantidadBultos() {
+		if(tieneMisiles){
+			return 2
+		}else{
+			return 1
+		}
 	}
 }
 
@@ -58,6 +78,8 @@ object arenaAGranel {
 	method peso() = peso
 	
 	method nivelPeligrosidad() = 1
+
+	method cantidadBultos() = 1
 }
 
 object bumblebee {
@@ -66,6 +88,8 @@ object bumblebee {
 	method peso() = 800
 	
 	method nivelPeligrosidad() = transformacion.nivelPeligrosidad()
+	
+	method cantidadBultos() = 2
 }
 
 object auto {
@@ -96,6 +120,8 @@ object contenedorPortuario {
 	method empaquetar(cosa) {
 		contenido.add(cosa)
 	}
+
+	method cantidadBultos() = 1 + contenido.sum({empaquetados => empaquetados.cantidadBultos()})
 }
 
 object embalajeDeSeguridad {
@@ -104,8 +130,22 @@ object embalajeDeSeguridad {
 	method embalar(cosa) {
 		embalado = cosa
 	}
+
+	method desembalar(cosa) {
+		if (embalado == cosa){
+			embalado = null
+		}else{
+			self.error("No esta embalado")
+		}
+	}
 	
 	method peso() = embalado.peso()
 	
 	method nivelPeligrosidad() = embalado.nivelPeligrosidad() / 2
+	
+	method cantidadBultos() = 2
+}
+
+object ruta9 {
+	
 }
